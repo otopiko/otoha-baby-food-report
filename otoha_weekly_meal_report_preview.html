@@ -1,0 +1,1889 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Otoha 주간 유아식 리포트</title>
+  <style>
+    :root {
+      --ink: #27312f;
+      --muted: #67736f;
+      --line: #dbe4df;
+      --paper: #fffdfa;
+      --soft: #f4f7f2;
+      --green: #78a083;
+      --leaf: #dcebd7;
+      --tomato: #e88973;
+      --sun: #f5c56b;
+      --blue: #7aa7b7;
+      --berry: #a784b8;
+      --rice: #f7ead5;
+      --danger: #c9675b;
+      --shadow: 0 14px 36px rgba(39, 49, 47, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(244, 247, 242, 0.88), rgba(255, 253, 250, 0.96)),
+        repeating-linear-gradient(90deg, rgba(120, 160, 131, 0.07) 0 1px, transparent 1px 88px);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-main {
+      position: relative;
+      min-height: 316px;
+      padding: 30px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 253, 250, 0.96), rgba(220, 235, 215, 0.88)),
+        url("data:image/svg+xml,%3Csvg width='900' height='520' viewBox='0 0 900 520' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2378a083' stroke-width='9' stroke-linecap='round' opacity='.22'%3E%3Cpath d='M654 78c-60 46-70 112-37 172 26 48 23 105-30 154'/%3E%3Cpath d='M748 151c-80 26-116 80-108 154 6 58-28 102-80 133'/%3E%3Cpath d='M548 103c54 24 88 67 92 132'/%3E%3C/g%3E%3Cg opacity='.9'%3E%3Cellipse cx='706' cy='350' rx='102' ry='42' fill='%23f7ead5'/%3E%3Cpath d='M607 345h200c-9 68-49 103-100 103s-91-35-100-103z' fill='%23ffffff' stroke='%2327312f' stroke-width='5'/%3E%3Cpath d='M650 305c-22-38 26-52 14-92 38 22 45 63 21 91' fill='%23e88973'/%3E%3Cpath d='M719 298c-4-43 52-40 58-82 24 35 9 75-28 94' fill='%23f5c56b'/%3E%3Cpath d='M673 329c23 10 51 12 85 0' stroke='%2378a083' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='612' cy='222' r='45' fill='%23a784b8' opacity='.55'/%3E%3Ccircle cx='783' cy='113' r='34' fill='%237aa7b7' opacity='.52'/%3E%3Ccircle cx='532' cy='378' r='28' fill='%23e88973' opacity='.46'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center right;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 14px;
+      color: #40544c;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    h1 {
+      max-width: 600px;
+      margin: 0 0 14px;
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 590px;
+      margin: 0;
+      color: #4f5d58;
+      font-size: 17px;
+    }
+
+    .season-callout {
+      max-width: 620px;
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 12px 14px;
+      border: 1px solid rgba(120, 160, 131, 0.34);
+      border-radius: 8px;
+      background: rgba(255, 253, 250, 0.82);
+      color: #40544c;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .season-callout span:first-child {
+      flex: 0 0 auto;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 610px;
+      margin-top: 28px;
+    }
+
+    .metric {
+      min-height: 84px;
+      padding: 14px;
+      border: 1px solid rgba(120, 160, 131, 0.34);
+      border-radius: 8px;
+      background: rgba(255, 253, 250, 0.76);
+      backdrop-filter: blur(7px);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .side-panel {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 250, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 4px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .toggle label {
+      min-height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    #lang-ko:checked ~ .page label[for="lang-ko"],
+    #lang-ja:checked ~ .page label[for="lang-ja"] {
+      color: var(--ink);
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(39, 49, 47, 0.08);
+    }
+
+    .lang-ja,
+    #lang-ja:checked ~ .page .lang-ko,
+    #lang-ko:checked ~ .page .lang-ja {
+      display: none;
+    }
+
+    #lang-ja:checked ~ .page .lang-ja {
+      display: revert;
+    }
+
+    .mini-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .goal-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .goal-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      flex: 0 0 auto;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .dot.sun { background: var(--sun); }
+    .dot.tomato { background: var(--tomato); }
+
+    .section {
+      margin-top: 22px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 250, 0.94);
+      box-shadow: 0 10px 28px rgba(39, 49, 47, 0.06);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+
+    .hint {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .basis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .basis-item {
+      min-height: 78px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .basis-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .basis-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      gap: 7px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #40544c;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .swatch.protein { background: var(--tomato); }
+    .swatch.calcium { background: var(--blue); }
+    .swatch.season { background: var(--sun); }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(148px, 1fr));
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .day-card {
+      min-width: 148px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .day-head {
+      padding: 10px;
+      background: var(--leaf);
+      font-weight: 800;
+    }
+
+    .meal {
+      min-height: 132px;
+      padding: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .meal-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+      color: #40544c;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .meal-name {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .grams {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .meal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 9px;
+    }
+
+    .protein-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .protein-icon {
+      width: 28px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid #e7d6c8;
+      border-radius: 999px;
+      background: #fff8ef;
+    }
+
+    .protein-icon svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .recipe-toggle {
+      margin-top: 9px;
+      border: 1px solid #e8ddcc;
+      border-radius: 8px;
+      background: #fffbf3;
+      overflow: hidden;
+    }
+
+    .recipe-toggle summary {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 9px;
+      color: #6b5635;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    .recipe-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .recipe-toggle summary::before {
+      content: "＋";
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #f5c56b;
+      color: #5b4522;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .recipe-toggle[open] summary::before {
+      content: "−";
+    }
+
+    .recipe-body {
+      display: grid;
+      gap: 6px;
+      padding: 0 9px 10px;
+      color: #665c4e;
+      font-size: 12px;
+    }
+
+    .recipe-body ol {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .recipe-note {
+      padding: 7px 8px;
+      border-radius: 6px;
+      background: #fff4f1;
+      color: #7a4b43;
+      font-weight: 700;
+    }
+
+    .tag {
+      padding: 3px 6px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: #40544c;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .tag.protein {
+      background: #fff0ec;
+      border-color: #efb0a3;
+      color: #9e4f42;
+    }
+
+    .tag.vegetable {
+      background: #edf7e9;
+      border-color: #b7d9ac;
+      color: #4e7652;
+    }
+
+    .tag.calcium {
+      background: #edf7fa;
+      border-color: #afd3dd;
+      color: #4f7f8f;
+    }
+
+    .tag.season {
+      background: #fff6df;
+      border-color: #ecc76f;
+      color: #8a6a21;
+    }
+
+    .tag.safety {
+      background: #fff4f1;
+      border-color: #e4aaa2;
+      color: #9a4d43;
+    }
+
+    .vegetable-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .veg-card {
+      min-height: 210px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .veg-visual {
+      width: 100%;
+      height: 92px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .veg-visual svg {
+      width: 78px;
+      height: 78px;
+    }
+
+    .veg-card h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .veg-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cook-time {
+      display: block;
+      margin-top: 9px;
+      padding: 8px 9px;
+      border-radius: 8px;
+      background: var(--rice);
+      color: #594b37;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-box {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .info-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      gap: 8px;
+      align-items: start;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #edf1ee;
+      font-size: 14px;
+    }
+
+    .check-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .box {
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
+      border: 2px solid var(--green);
+      border-radius: 4px;
+    }
+
+    .amount {
+      color: var(--muted);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .record-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .record-table th,
+    .record-table td {
+      min-width: 116px;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .record-table th {
+      background: var(--soft);
+      font-weight: 800;
+    }
+
+    .record-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .record-table th:last-child,
+    .record-table td:last-child {
+      border-right: 0;
+    }
+
+    .note {
+      padding: 14px;
+      border-left: 4px solid var(--danger);
+      background: #fff4f1;
+      color: #63413b;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .vegetable-grid,
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .basis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero-main,
+      .section,
+      .side-panel {
+        padding: 16px;
+      }
+
+      .hero-meta,
+      .vegetable-grid,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .basis-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .legend {
+        justify-content: flex-start;
+        margin-top: 12px;
+      }
+
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        background: #ffffff;
+      }
+
+      .shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .toggle {
+        display: none;
+      }
+
+      .hero,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .week-grid {
+        grid-template-columns: repeat(7, 1fr);
+        overflow: visible;
+      }
+
+      .day-card,
+      .section,
+      .hero-main,
+      .side-panel {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <input type="radio" name="language" id="lang-ko" checked />
+  <input type="radio" name="language" id="lang-ja" />
+
+  <div class="page">
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-main">
+          <div class="lang-ko">
+            <div class="eyebrow">OTOHA WEEKLY MEAL REPORT · <span data-dynamic="week-range">2026.06.22-06.28</span></div>
+            <h1>Otoha 주간 유아식 리포트</h1>
+            <p class="lead"><span data-dynamic="age-months-ko">23개월</span> Otoha를 위한 제철 채소 중심 식단입니다. 제공량, 핵심 영양, 전날 준비, 비타민 보존 조리법을 한 화면에서 확인할 수 있게 구성했습니다.</p>
+            <div class="season-callout"><span data-dynamic="season-title-ko">6월 추천</span><span data-dynamic="season-copy-ko">녹색 채소는 애호박·오이·강낭콩, 과일은 참외·수박·블루베리를 부드럽고 작게 손질해 활용합니다.</span></div>
+            <div class="hero-meta">
+              <div class="metric"><strong>21끼</strong><span>아침·점심·저녁</span></div>
+              <div class="metric"><strong data-dynamic="season-count-ko">7종</strong><span>이번 주 제철 채소</span></div>
+              <div class="metric"><strong>저염</strong><span>간장·된장 최소 사용</span></div>
+            </div>
+          </div>
+          <div class="lang-ja">
+            <div class="eyebrow">OTOHA WEEKLY MEAL REPORT · <span data-dynamic="week-range">2026.06.22-06.28</span></div>
+            <h1>Otoha 週間幼児食レポート</h1>
+            <p class="lead"><span data-dynamic="age-months-ja">23か月</span>のOtohaのための、旬の野菜を中心にした献立です。目安量、主な栄養、前日の準備、ビタミンを守る調理法を一目で確認できます。</p>
+            <div class="season-callout"><span data-dynamic="season-title-ja">6月おすすめ</span><span data-dynamic="season-copy-ja">緑の野菜はズッキーニ風野菜・きゅうり・いんげん豆、果物はまくわうり・すいか・ブルーベリーを小さくやわらかくして使います。</span></div>
+            <div class="hero-meta">
+              <div class="metric"><strong>21食</strong><span>朝・昼・夜</span></div>
+              <div class="metric"><strong data-dynamic="season-count-ja">7種</strong><span>今週の旬野菜</span></div>
+              <div class="metric"><strong>薄味</strong><span>醤油・味噌は少量</span></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="toggle" aria-label="language">
+            <label for="lang-ko">한국어</label>
+            <label for="lang-ja">日本語</label>
+          </div>
+          <div class="lang-ko">
+            <h2 class="mini-title">이번 주 목표</h2>
+            <ul class="goal-list">
+              <li><span class="dot"></span><span>제철 채소를 매일 2종 이상 노출</span></li>
+              <li><span class="dot sun"></span><span>소고기·돼지고기로 철분 보강 3회</span></li>
+              <li><span class="dot tomato"></span><span>생선 2회, 두부 3회로 단백질 다양화</span></li>
+            </ul>
+          </div>
+          <div class="lang-ja">
+            <h2 class="mini-title">今週の目標</h2>
+            <ul class="goal-list">
+              <li><span class="dot"></span><span>旬の野菜を毎日2種類以上取り入れる</span></li>
+              <li><span class="dot sun"></span><span>牛肉・豚肉で鉄分を週3回補う</span></li>
+              <li><span class="dot tomato"></span><span>魚2回、豆腐3回でたんぱく質を分散</span></li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="lang-ko">
+            <h2>요일별 3끼 식단</h2>
+            <p class="hint">그램수는 권장 제공량 범위입니다. 식욕과 컨디션에 따라 70-120% 범위로 조절합니다.</p>
+          </div>
+          <div class="lang-ja">
+            <h2>曜日別 3食献立</h2>
+            <p class="hint">グラム数は提供量の目安です。食欲や体調に合わせて70-120%の範囲で調整します。</p>
+          </div>
+          <div class="legend">
+            <span class="pill"><span class="swatch protein"></span><span class="lang-ko">단백질</span><span class="lang-ja">たんぱく質</span></span>
+            <span class="pill"><span class="swatch"></span><span class="lang-ko">채소</span><span class="lang-ja">野菜</span></span>
+            <span class="pill"><span class="swatch calcium"></span><span class="lang-ko">칼슘</span><span class="lang-ja">カルシウム</span></span>
+            <span class="pill"><span class="swatch season"></span><span class="lang-ko">제철</span><span class="lang-ja">旬</span></span>
+          </div>
+        </div>
+
+        <div class="basis-grid">
+          <div class="basis-item">
+            <strong><span class="lang-ko">밥·죽·국물</span><span class="lang-ja">ご飯・お粥・スープ</span></strong>
+            <span class="lang-ko">조리 후 제공량 기준</span><span class="lang-ja">調理後の提供量基準</span>
+          </div>
+          <div class="basis-item">
+            <strong><span class="lang-ko">고기·생선</span><span class="lang-ja">肉・魚</span></strong>
+            <span class="lang-ko">손질 후 조리 전 기준</span><span class="lang-ja">下処理後、加熱前の量</span>
+          </div>
+          <div class="basis-item">
+            <strong><span class="lang-ko">채소·과일</span><span class="lang-ja">野菜・果物</span></strong>
+            <span class="lang-ko">씻고 껍질/씨 제거 후 기준</span><span class="lang-ja">洗浄後、皮/種を除いた量</span>
+          </div>
+          <div class="basis-item">
+            <strong><span class="lang-ko">유제품·달걀</span><span class="lang-ja">乳製品・卵</span></strong>
+            <span class="lang-ko">실제 제공량 또는 개수 기준</span><span class="lang-ja">実際の提供量または個数基準</span>
+          </div>
+        </div>
+
+        <div class="week-grid" data-render="weekly-meals">
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">월요일</span><span class="lang-ja">月曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">소고기 애호박 진밥</span><span class="lang-ja">牛肉とズッキーニ風やわらかご飯</span></p>
+              <div class="grams"><span>밥 90g · 소고기 25g</span><span>애호박 30g</span></div>
+              <div class="meal-tags"><span class="tag">철분</span><span class="tag">제철</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">닭감자조림과 양배추찜</span><span class="lang-ja">鶏じゃが煮とキャベツ蒸し</span></p>
+              <div class="grams"><span>밥 90g · 닭 30g</span><span>감자 45g · 양배추 30g</span></div>
+              <div class="meal-tags"><span class="tag">단백질</span><span class="tag">비타민 C</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">두부 가지 덮밥</span><span class="lang-ja">豆腐となすの丼</span></p>
+              <div class="grams"><span>밥 85g · 두부 45g</span><span>가지 35g</span></div>
+              <div class="meal-tags"><span class="tag">칼슘</span><span class="tag">식이섬유</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">화요일</span><span class="lang-ja">火曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">달걀 양파 죽</span><span class="lang-ja">卵と玉ねぎのお粥</span></p>
+              <div class="grams"><span>죽 150g · 달걀 1/2개</span><span>양파 20g</span></div>
+              <div class="meal-tags"><span class="tag">단백질</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">흰살생선 토마토 소스밥</span><span class="lang-ja">白身魚のトマトソースご飯</span></p>
+              <div class="grams"><span>밥 90g · 생선 30g</span><span>토마토 35g</span></div>
+              <div class="meal-tags"><span class="tag">생선</span><span class="tag">리코펜</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">돼지안심 양배추 볶음밥</span><span class="lang-ja">豚ヒレとキャベツの炒めご飯</span></p>
+              <div class="grams"><span>밥 90g · 돼지안심 30g</span><span>양배추 35g</span></div>
+              <div class="meal-tags"><span class="tag">철분</span><span class="tag">아연</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">수요일</span><span class="lang-ja">水曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">감자 브로콜리 수프</span><span class="lang-ja">じゃがいもとブロッコリーのスープ</span></p>
+              <div class="grams"><span>감자 60g · 우유 80ml</span><span>브로콜리 25g</span></div>
+              <div class="meal-tags"><span class="tag">칼슘</span><span class="tag">비타민 C</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">두부 애호박 덮밥</span><span class="lang-ja">豆腐とズッキーニ風野菜の丼</span></p>
+              <div class="grams"><span>밥 90g · 두부 50g</span><span>애호박 35g</span></div>
+              <div class="meal-tags"><span class="tag">두부</span><span class="tag">제철</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">소고기 오이 무른비빔밥</span><span class="lang-ja">牛肉ときゅうりのやわらか混ぜご飯</span></p>
+              <div class="grams"><span>밥 90g · 소고기 25g</span><span>오이 25g</span></div>
+              <div class="meal-tags"><span class="tag">철분</span><span class="tag">수분</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">목요일</span><span class="lang-ja">木曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">요거트 오트밀과 블루베리</span><span class="lang-ja">ヨーグルトオートミールとブルーベリー</span></p>
+              <div class="grams"><span>요거트 90g · 오트밀 20g</span><span>블루베리 30g</span></div>
+              <div class="meal-tags"><span class="tag">칼슘</span><span class="tag">과일</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">닭고기 가지찜 밥</span><span class="lang-ja">鶏肉となすの蒸しご飯</span></p>
+              <div class="grams"><span>밥 90g · 닭 30g</span><span>가지 40g</span></div>
+              <div class="meal-tags"><span class="tag">단백질</span><span class="tag">찜</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">달걀 토마토 볶음밥</span><span class="lang-ja">卵とトマトの炒めご飯</span></p>
+              <div class="grams"><span>밥 85g · 달걀 1/2개</span><span>토마토 40g</span></div>
+              <div class="meal-tags"><span class="tag">리코펜</span><span class="tag">저염</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">금요일</span><span class="lang-ja">金曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">양배추 달걀찜과 밥</span><span class="lang-ja">キャベツ入り茶碗蒸しとご飯</span></p>
+              <div class="grams"><span>밥 80g · 달걀 1/2개</span><span>양배추 25g</span></div>
+              <div class="meal-tags"><span class="tag">부드러움</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">고등어 감자조림</span><span class="lang-ja">さばとじゃがいもの煮物</span></p>
+              <div class="grams"><span>밥 90g · 고등어 25g</span><span>감자 45g</span></div>
+              <div class="meal-tags"><span class="tag">DHA</span><span class="tag">가시주의</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">두부 양파 소보로밥</span><span class="lang-ja">豆腐と玉ねぎのそぼろご飯</span></p>
+              <div class="grams"><span>밥 90g · 두부 50g</span><span>양파 25g</span></div>
+              <div class="meal-tags"><span class="tag">칼슘</span><span class="tag">단맛</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">토요일</span><span class="lang-ja">土曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">참외 치즈 토스트</span><span class="lang-ja">まくわうりとチーズトースト</span></p>
+              <div class="grams"><span>식빵 1/2장 · 치즈 1/2장</span><span>참외 50g</span></div>
+              <div class="meal-tags"><span class="tag">칼슘</span><span class="tag">과일</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">소고기 토마토 리조또</span><span class="lang-ja">牛肉とトマトのリゾット</span></p>
+              <div class="grams"><span>밥 85g · 소고기 30g</span><span>토마토 40g</span></div>
+              <div class="meal-tags"><span class="tag">철분</span><span class="tag">리코펜</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">닭고기 애호박 국수</span><span class="lang-ja">鶏肉とズッキーニ風野菜のうどん</span></p>
+              <div class="grams"><span>면 80g · 닭 25g</span><span>애호박 35g</span></div>
+              <div class="meal-tags"><span class="tag">수분</span><span class="tag">저염국물</span></div>
+            </div>
+          </article>
+
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">일요일</span><span class="lang-ja">日曜日</span></div>
+            <div class="meal">
+              <div class="meal-label">아침 · 朝</div>
+              <p class="meal-name"><span class="lang-ko">감자 달걀 팬케이크</span><span class="lang-ja">じゃがいも卵パンケーキ</span></p>
+              <div class="grams"><span>감자 60g · 달걀 1/2개</span><span>밀가루 8g</span></div>
+              <div class="meal-tags"><span class="tag">손잡이식</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">점심 · 昼</div>
+              <p class="meal-name"><span class="lang-ko">돼지안심 가지 덮밥</span><span class="lang-ja">豚ヒレとなすの丼</span></p>
+              <div class="grams"><span>밥 90g · 돼지안심 30g</span><span>가지 35g</span></div>
+              <div class="meal-tags"><span class="tag">철분</span><span class="tag">제철</span></div>
+            </div>
+            <div class="meal">
+              <div class="meal-label">저녁 · 夜</div>
+              <p class="meal-name"><span class="lang-ko">두부 양배추 맑은국밥</span><span class="lang-ja">豆腐とキャベツの薄味スープご飯</span></p>
+              <div class="grams"><span>밥 80g · 두부 45g</span><span>양배추 35g · 국물 60ml</span></div>
+              <div class="meal-tags"><span class="tag">마무리식</span><span class="tag">저염</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="lang-ko">
+            <h2>이번 주 제철 채소와 조리법</h2>
+            <p class="hint">비타민 손실을 줄이기 위해 찜, 짧은 볶음, 조리 직전 손질을 기본으로 합니다.</p>
+          </div>
+          <div class="lang-ja">
+            <h2>今週の旬野菜と調理法</h2>
+            <p class="hint">ビタミンの損失を抑えるため、蒸す、短時間で炒める、調理直前に切ることを基本にします。</p>
+          </div>
+        </div>
+
+        <div class="vegetable-grid" data-render="weekly-vegetables">
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M30 68c6-30 28-45 50-35 5 24-13 48-45 52-7 1-9-7-5-17z" fill="#8fbf73" stroke="#456b43" stroke-width="4" />
+                <path d="M37 70c11-13 24-22 40-28" stroke="#dcebd7" stroke-width="4" fill="none" stroke-linecap="round" />
+                <circle cx="47" cy="63" r="3" fill="#dcebd7" />
+                <circle cx="58" cy="55" r="3" fill="#dcebd7" />
+                <circle cx="68" cy="48" r="3" fill="#dcebd7" />
+                <path d="M78 32c3-7 9-9 14-6" stroke="#5e8d5e" stroke-width="5" fill="none" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">애호박</span><span class="lang-ja">ズッキーニ風野菜</span></h3>
+            <p><span class="lang-ko">3-5분 짧게 익혀 덮밥과 진밥에 사용합니다.</span><span class="lang-ja">3-5分だけ加熱し、丼ややわらかご飯に使います。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 얇게 썰어 찜 5-7분, 볶음은 부드러워지면 종료</span><span class="lang-ja">時間: 薄切りで蒸し5-7分、炒めはやわらかくなったら終了</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="51" cy="56" r="31" fill="#c9dfaf" stroke="#75955d" stroke-width="4" />
+                <path d="M29 56c13-17 35-23 48-5 8 11 4 25-10 31" stroke="#75955d" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M40 28c-7 14-4 28 10 42M62 30c11 13 12 28 2 45M28 69c14-9 32-12 51-4" stroke="#eef6df" stroke-width="5" fill="none" stroke-linecap="round" />
+                <path d="M35 39c13 1 27 7 42 19" stroke="#8aaa65" stroke-width="4" fill="none" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">양배추</span><span class="lang-ja">キャベツ</span></h3>
+            <p><span class="lang-ko">삶기보다 찜으로 익히고, 잘게 다져 달걀찜에 넣습니다.</span><span class="lang-ja">茹でるより蒸し、細かく刻んで茶碗蒸しに入れます。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 얇게 썬 양배추 찜 8-12분, 잘게 다지면 중간부터 확인</span><span class="lang-ja">時間: 細切りキャベツは蒸し8-12分、細かく切る場合は途中で確認</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M23 60c2-18 18-31 38-28 17 2 28 15 25 31-4 20-23 30-43 25-13-3-22-14-20-28z" fill="#d9b56d" stroke="#9d7a3e" stroke-width="4" />
+                <circle cx="41" cy="50" r="3" fill="#b48746" />
+                <circle cx="60" cy="45" r="2.8" fill="#b48746" />
+                <circle cx="70" cy="63" r="3.2" fill="#b48746" />
+                <path d="M33 67c13 7 28 7 44-3M34 54c11-8 26-11 43-6" stroke="#f2d68e" stroke-width="4" fill="none" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">감자</span><span class="lang-ja">じゃがいも</span></h3>
+            <p><span class="lang-ko">껍질째 찐 뒤 껍질을 제거하면 비타민 C 손실을 줄일 수 있습니다.</span><span class="lang-ja">皮つきで蒸してから皮をむくとビタミンCの損失を抑えられます。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 작은 감자/조각 찜 10-15분, 포크가 쉽게 들어가면 종료</span><span class="lang-ja">時間: 小さめ/一口大は蒸し10-15分、フォークが通れば終了</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M44 20c30 8 40 39 23 61-12 15-36 10-43-6-9-22-1-46 20-55z" fill="#8d65a8" stroke="#5f3d76" stroke-width="4" />
+                <path d="M47 22c-1-9 7-15 17-12" stroke="#5e8d5e" stroke-width="6" fill="none" stroke-linecap="round" />
+                <path d="M36 42c-8 14-9 27-1 41M51 31c12 14 15 31 6 51" stroke="#cdb7dc" stroke-width="4" fill="none" stroke-linecap="round" />
+                <ellipse cx="53" cy="55" rx="8" ry="20" fill="#a784b8" opacity=".35" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">가지</span><span class="lang-ja">なす</span></h3>
+            <p><span class="lang-ko">물에 오래 담그지 않고 찜으로 부드럽게 익혀 사용합니다.</span><span class="lang-ja">水に長くさらさず、蒸してやわらかくします。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 작게 썰어 찜 5분부터 확인, 30초 간격으로 부드러움 확인</span><span class="lang-ja">時間: 小さく切って蒸し5分から確認、30秒ごとにやわらかさを見る</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M38 18c22 0 36 18 30 44-5 22-22 33-39 25-15-7-16-25-6-42 7-11 10-21 15-27z" fill="#79b56d" stroke="#4f7f45" stroke-width="4" />
+                <path d="M42 24c10 20 8 39-8 56" stroke="#dcebd7" stroke-width="5" fill="none" stroke-linecap="round" />
+                <path d="M33 43c12 0 24 4 35 11M29 61c10-1 21 2 31 9" stroke="#a9cf8c" stroke-width="3.5" fill="none" stroke-linecap="round" />
+                <circle cx="49" cy="44" r="2.5" fill="#dcebd7" />
+                <circle cx="55" cy="60" r="2.5" fill="#dcebd7" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">오이</span><span class="lang-ja">きゅうり</span></h3>
+            <p><span class="lang-ko">껍질 일부 제거 후 아주 작게 썰고, 씨가 많은 부분은 조절합니다.</span><span class="lang-ja">皮を一部むき、小さく切ります。種が多い部分は調整します。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 생으로 0분, 질기면 전자레인지찜 1분 후 식혀 제공</span><span class="lang-ja">時間: 生なら0分、硬ければ電子レンジ蒸し1分後に冷ます</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="51" cy="59" r="29" fill="#e87765" stroke="#bf5146" stroke-width="4" />
+                <path d="M51 33l-10-14 11 7 11-9-3 14 13-4-10 10" fill="#6c9d5f" stroke="#4d7d44" stroke-width="3" stroke-linejoin="round" />
+                <path d="M37 52c9-8 22-9 34-1M35 66c11 8 23 9 36 1" stroke="#f7c0b5" stroke-width="4" fill="none" stroke-linecap="round" />
+                <circle cx="42" cy="58" r="3" fill="#f49a8c" />
+                <circle cx="61" cy="70" r="2.8" fill="#f49a8c" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">토마토</span><span class="lang-ja">トマト</span></h3>
+            <p><span class="lang-ko">껍질 제거 후 기름 몇 방울과 익히면 리코펜 흡수에 도움이 됩니다.</span><span class="lang-ja">皮をむき、油を数滴加えて加熱するとリコピン吸収を助けます。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 껍질 제거용 데침 30-60초, 소스는 2-3분만 짧게</span><span class="lang-ja">時間: 皮むき用の湯通し30-60秒、ソースは2-3分だけ短く</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M50 14c9 10 26 21 27 43 1 21-11 33-27 33S22 78 23 57c1-22 18-33 27-43z" fill="#efd58f" stroke="#b38b45" stroke-width="4" />
+                <path d="M50 16c-4 16-7 32-7 49 0 11 3 19 7 24" stroke="#b38b45" stroke-width="4" fill="none" stroke-linecap="round" opacity=".68" />
+                <path d="M50 16c5 16 8 32 7 49 0 11-3 19-7 24" stroke="#b38b45" stroke-width="4" fill="none" stroke-linecap="round" opacity=".68" />
+                <path d="M38 31c-7 11-10 22-9 34 1 10 6 18 14 23" stroke="#d7ae5d" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M62 31c7 11 10 22 9 34-1 10-6 18-14 23" stroke="#d7ae5d" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M42 18c2-8 8-11 16-8M45 88c3 4 7 4 10 0M39 92c8 5 15 5 23 0" stroke="#7c8f55" stroke-width="4" fill="none" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">양파</span><span class="lang-ja">玉ねぎ</span></h3>
+            <p><span class="lang-ko">충분히 익혀 단맛을 내고, 간장 없이도 풍미를 보완합니다.</span><span class="lang-ja">しっかり加熱して甘みを出し、醤油なしでも風味を補います。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 잘게 다져 찜/볶음 4-6분, 투명하고 부드러우면 종료</span><span class="lang-ja">時間: 細かく切って蒸し/炒め4-6分、透明でやわらかければ終了</span></span>
+          </article>
+
+          <article class="veg-card">
+            <div class="veg-visual">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="51" cy="56" r="31" fill="#9b7db3" stroke="#6f4f86" stroke-width="4" />
+                <path d="M30 55c12-18 34-25 49-6 9 11 5 26-9 34" stroke="#6f4f86" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M40 29c-7 16-4 31 10 44M63 30c10 15 10 31-1 48M29 70c14-9 32-11 51-4" stroke="#d8c7e4" stroke-width="5" fill="none" stroke-linecap="round" />
+                <path d="M34 41c14 0 29 6 44 18" stroke="#b69ac8" stroke-width="4" fill="none" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3><span class="lang-ko">적채</span><span class="lang-ja">紫キャベツ</span></h3>
+            <p><span class="lang-ko">소량만 곱게 다져 색 노출용으로 쓰고, 식감이 질기면 찜으로 조절합니다.</span><span class="lang-ja">少量を細かく刻んで色に慣れる目的で使い、硬ければ蒸します。</span></p>
+            <span class="cook-time"><span class="lang-ko">시간: 얇게 썰어 찜 8-12분 기준, 유아식은 잘게 다져 중간 확인</span><span class="lang-ja">時間: 薄切りで蒸し8-12分が目安、幼児食は細かくして途中確認</span></span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="lang-ko">
+          <h2>월별 제철 채소·과일 추천</h2>
+          <p class="hint">한국에서 구입하기 쉬운 제철 농산물 기준입니다. 주간 식단 작성 시 해당 월의 4-6개를 골라 반복 활용합니다.</p>
+          <table class="record-table">
+            <thead>
+              <tr><th>월</th><th>채소 추천</th><th>과일 추천</th><th>Otoha용 활용 팁</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1월</td><td>겨울배추, 무, 시금치, 대파</td><td>딸기, 귤, 사과, 배</td><td>배추·무는 맑은국, 시금치는 짧게 데쳐 다지기</td></tr>
+              <tr><td>2월</td><td>봄동, 냉이, 달래, 시금치</td><td>딸기, 한라봉, 천혜향, 사과</td><td>향이 강한 봄나물은 소량만 넣고 달걀찜에 섞기</td></tr>
+              <tr><td>3월</td><td>봄동, 냉이, 쑥, 미나리, 감자</td><td>딸기, 사과, 배</td><td>나물은 잘게 다져 죽·전·수프 형태로 제공</td></tr>
+              <tr><td>4월</td><td>아스파라거스, 두릅, 양배추, 완두콩</td><td>딸기, 참외, 토마토</td><td>두릅은 향이 강해 소량, 완두콩은 부드럽게 으깨기</td></tr>
+              <tr><td>5월</td><td>양파, 감자, 오이, 애호박, 완두콩</td><td>참외, 토마토, 매실, 체리</td><td>오이는 작게, 감자는 찜으로 준비해 아침 메뉴에 활용</td></tr>
+              <tr><td>6월</td><td>감자, 양파, 가지, 애호박, 강낭콩</td><td>참외, 수박, 블루베리, 산딸기</td><td>가지·애호박은 찜/짧은 볶음, 콩류는 충분히 익히기</td></tr>
+              <tr><td>7월</td><td>옥수수, 오이, 가지, 토마토, 열무</td><td>수박, 복숭아, 자두, 포도</td><td>옥수수는 알갱이 질식 주의, 포도는 세로 4등분</td></tr>
+              <tr><td>8월</td><td>옥수수, 감자, 열무, 오이, 토마토</td><td>포도, 복숭아, 자두, 무화과, 블루베리</td><td>복숭아는 알레르기 반응 확인, 포도는 껍질·씨 조절</td></tr>
+              <tr><td>9월</td><td>고구마, 토란, 버섯, 단호박, 연근</td><td>배, 사과, 포도, 무화과</td><td>토란은 충분히 익히고, 버섯은 잘게 다져 볶음밥에 사용</td></tr>
+              <tr><td>10월</td><td>고구마, 단호박, 무, 배추, 버섯</td><td>사과, 배, 단감, 귤</td><td>단호박·고구마는 찜으로 간식과 죽에 활용</td></tr>
+              <tr><td>11월</td><td>배추, 무, 늙은호박, 시금치, 연근</td><td>단감, 사과, 배, 귤</td><td>연근은 푹 익혀 잘게, 단감은 작게 잘라 제공</td></tr>
+              <tr><td>12월</td><td>무, 배추, 시금치, 브로콜리, 대파</td><td>귤, 딸기, 한라봉, 사과, 배</td><td>브로콜리는 짧게 데치고, 귤은 얇은 막과 씨 확인</td></tr>
+            </tbody>
+          </table>
+          <p class="hint">자료 기준: 농식품정보누리 월별 제철농산물, 농촌진흥청/국립식량과학원 이달의 식재료, aT KAMIS 제철·가격 정보.</p>
+        </div>
+        <div class="lang-ja">
+          <h2>月別 旬の野菜・果物おすすめ</h2>
+          <p class="hint">韓国で購入しやすい旬の農産物を基準にしています。週の献立では、その月から4-6種類を選んで使います。</p>
+          <table class="record-table">
+            <thead>
+              <tr><th>月</th><th>野菜のおすすめ</th><th>果物のおすすめ</th><th>Otoha向けの使い方</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1月</td><td>冬白菜、大根、ほうれん草、長ねぎ</td><td>いちご、みかん、りんご、梨</td><td>白菜・大根は薄味スープ、ほうれん草は短く茹でて刻む</td></tr>
+              <tr><td>2月</td><td>春白菜、なずな、ヒメニラ、ほうれん草</td><td>いちご、ハルラボン、柑橘、りんご</td><td>香りの強い春野菜は少量から、卵料理に混ぜる</td></tr>
+              <tr><td>3月</td><td>春白菜、なずな、よもぎ、セリ、じゃがいも</td><td>いちご、りんご、梨</td><td>山菜は細かく刻み、お粥・チヂミ・スープにする</td></tr>
+              <tr><td>4月</td><td>アスパラガス、タラの芽、キャベツ、えんどう豆</td><td>いちご、まくわうり、トマト</td><td>タラの芽は少量、えんどう豆はやわらかく潰す</td></tr>
+              <tr><td>5月</td><td>玉ねぎ、じゃがいも、きゅうり、ズッキーニ風野菜、えんどう豆</td><td>まくわうり、トマト、梅、さくらんぼ</td><td>きゅうりは小さく、じゃがいもは蒸して朝食に使う</td></tr>
+              <tr><td>6月</td><td>じゃがいも、玉ねぎ、なす、ズッキーニ風野菜、いんげん豆</td><td>まくわうり、すいか、ブルーベリー、木いちご</td><td>なす・ズッキーニ風野菜は蒸す/短時間炒め、豆類は十分加熱</td></tr>
+              <tr><td>7月</td><td>とうもろこし、きゅうり、なす、トマト、若大根葉</td><td>すいか、桃、すもも、ぶどう</td><td>とうもろこしは粒の窒息に注意、ぶどうは縦4等分</td></tr>
+              <tr><td>8月</td><td>とうもろこし、じゃがいも、若大根葉、きゅうり、トマト</td><td>ぶどう、桃、すもも、いちじく、ブルーベリー</td><td>桃はアレルギー反応を確認、ぶどうは皮・種を調整</td></tr>
+              <tr><td>9月</td><td>さつまいも、里芋、きのこ、かぼちゃ、れんこん</td><td>梨、りんご、ぶどう、いちじく</td><td>里芋は十分加熱、きのこは細かく刻んで炒めご飯にする</td></tr>
+              <tr><td>10月</td><td>さつまいも、かぼちゃ、大根、白菜、きのこ</td><td>りんご、梨、甘柿、みかん</td><td>かぼちゃ・さつまいもは蒸しておやつやお粥に使う</td></tr>
+              <tr><td>11月</td><td>白菜、大根、熟成かぼちゃ、ほうれん草、れんこん</td><td>甘柿、りんご、梨、みかん</td><td>れんこんはやわらかく煮て刻む、甘柿は小さく切る</td></tr>
+              <tr><td>12月</td><td>大根、白菜、ほうれん草、ブロッコリー、長ねぎ</td><td>みかん、いちご、ハルラボン、りんご、梨</td><td>ブロッコリーは短く茹で、みかんは薄皮と種を確認</td></tr>
+            </tbody>
+          </table>
+          <p class="hint">参考: 農食品情報ヌリの月別旬農産物、農村振興庁/国立食糧科学院の今月の食材、aT KAMISの旬・価格情報。</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="two-col">
+          <div class="info-box">
+            <div class="lang-ko">
+              <h3>장보기 체크리스트</h3>
+              <ul class="check-list" data-render="shopping-list-ko">
+                <li><span class="box"></span><span>쌀/밥: 식단표 조리 후 밥 기준 약 1,315g + 죽 1회</span><span class="amount">생쌀 약 500g</span></li>
+                <li><span class="box"></span><span>소고기 다짐육 또는 국거리: 식단 합산 80g</span><span class="amount">구매 100g</span></li>
+                <li><span class="box"></span><span>돼지안심: 식단 합산 60g</span><span class="amount">구매 70-80g</span></li>
+                <li><span class="box"></span><span>닭다리살 또는 닭안심: 식단 합산 85g</span><span class="amount">구매 100g</span></li>
+                <li><span class="box"></span><span>흰살생선 30g, 고등어 순살 25g</span><span class="amount">각 1회분</span></li>
+                <li><span class="box"></span><span>두부 190g, 달걀 2개, 무가당 요거트 90g</span><span class="amount">소포장 1개씩</span></li>
+                <li><span class="box"></span><span>우유 80ml, 치즈 1/2장, 오트밀 20g, 식빵 1/2장, 면 80g, 밀가루 8g</span><span class="amount">보유분 확인</span></li>
+                <li><span class="box"></span><span>감자 210g, 양배추 125g, 토마토 115g, 가지 110g, 애호박 100g</span><span class="amount">손질 후 기준</span></li>
+                <li><span class="box"></span><span>양파 45g, 오이 25g, 브로콜리 25g</span><span class="amount">소량</span></li>
+                <li><span class="box"></span><span>참외 50g, 블루베리 30g</span><span class="amount">과일 2종</span></li>
+              </ul>
+            </div>
+            <div class="lang-ja">
+              <h3>買い物チェックリスト</h3>
+              <ul class="check-list" data-render="shopping-list-ja">
+                <li><span class="box"></span><span>米/ご飯: 献立表の炊飯後ご飯 約1,315g + お粥1回</span><span class="amount">生米 約500g</span></li>
+                <li><span class="box"></span><span>牛ひき肉または煮込み用牛肉: 献立合計80g</span><span class="amount">購入100g</span></li>
+                <li><span class="box"></span><span>豚ヒレ肉: 献立合計60g</span><span class="amount">購入70-80g</span></li>
+                <li><span class="box"></span><span>鶏もも肉または鶏ささみ: 献立合計85g</span><span class="amount">購入100g</span></li>
+                <li><span class="box"></span><span>白身魚30g、骨なしさば25g</span><span class="amount">各1回分</span></li>
+                <li><span class="box"></span><span>豆腐190g、卵2個、無糖ヨーグルト90g</span><span class="amount">小パック各1</span></li>
+                <li><span class="box"></span><span>牛乳80ml、チーズ1/2枚、オートミール20g、食パン1/2枚、麺80g、小麦粉8g</span><span class="amount">在庫確認</span></li>
+                <li><span class="box"></span><span>じゃがいも210g、キャベツ125g、トマト115g、なす110g、ズッキーニ風野菜100g</span><span class="amount">下処理後基準</span></li>
+                <li><span class="box"></span><span>玉ねぎ45g、きゅうり25g、ブロッコリー25g</span><span class="amount">少量</span></li>
+                <li><span class="box"></span><span>まくわうり50g、ブルーベリー30g</span><span class="amount">果物2種</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="lang-ko">
+              <h3>전날 준비</h3>
+              <ul class="check-list">
+                <li><span class="box"></span><span>고기 25-30g씩 소분 후 냉동</span><span class="amount">10분</span></li>
+                <li><span class="box"></span><span>감자는 껍질째 쪄서 냉장 보관</span><span class="amount">15분</span></li>
+                <li><span class="box"></span><span>애호박·양파는 조리 직전 다지기</span><span class="amount">영양 보존</span></li>
+                <li><span class="box"></span><span>생선 가시 확인 후 1회분 냉장 해동</span><span class="amount">안전</span></li>
+              </ul>
+              <div class="note" style="margin-top:14px;">포도, 방울토마토, 견과류, 질긴 고기, 떡은 질식 위험이 있으므로 통째 제공하지 않습니다.</div>
+            </div>
+            <div class="lang-ja">
+              <h3>前日の準備</h3>
+              <ul class="check-list">
+                <li><span class="box"></span><span>肉を25-30gずつ小分けして冷凍</span><span class="amount">10分</span></li>
+                <li><span class="box"></span><span>じゃがいもは皮つきで蒸して冷蔵</span><span class="amount">15分</span></li>
+                <li><span class="box"></span><span>野菜は調理直前に刻む</span><span class="amount">栄養保持</span></li>
+                <li><span class="box"></span><span>魚の骨を確認し、1回分を冷蔵解凍</span><span class="amount">安全</span></li>
+              </ul>
+              <div class="note" style="margin-top:14px;">ぶどう、ミニトマト、ナッツ、硬い肉、餅は窒息リスクがあるため、そのまま出しません。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="lang-ko">
+          <h2>섭취 기록</h2>
+          <p class="hint">권장량보다 실제 반응이 더 중요합니다. 다음 주 식단 조정에 사용합니다.</p>
+          <table class="record-table">
+            <thead>
+              <tr><th>날짜</th><th>잘 먹은 메뉴</th><th>남긴 메뉴</th><th>변 상태</th><th>다음 주 반영</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>월</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>화</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>수</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>목</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>금</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>토</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>일</td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="lang-ja">
+          <h2>食事記録</h2>
+          <p class="hint">目安量より実際の反応を重視します。翌週の献立調整に使います。</p>
+          <table class="record-table">
+            <thead>
+              <tr><th>日付</th><th>よく食べた料理</th><th>残した料理</th><th>便の状態</th><th>翌週への反映</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>月</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>火</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>水</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>木</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>金</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>土</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td>日</td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const reportConfig = {
+        childName: "Otoha",
+        birthday: { year: 2024, monthIndex: 6, day: 22 },
+        referenceDate: null,
+        mealPlanWeekKey: "default"
+      };
+
+      const otohaBirthday = new Date(
+        reportConfig.birthday.year,
+        reportConfig.birthday.monthIndex,
+        reportConfig.birthday.day
+      );
+      const today = reportConfig.referenceDate ? new Date(reportConfig.referenceDate) : new Date();
+
+      // Dynamic source data for monthly produce recommendations.
+      // month: 1-12, greens: highlighted green vegetables, tip: first-page recommendation copy.
+      const seasonalByMonth = [
+        {
+          month: 1,
+          ko: {
+            vegetables: ["겨울배추", "무", "시금치", "대파"],
+            fruits: ["딸기", "귤", "사과", "배"],
+            greens: ["시금치", "겨울배추"],
+            tip: "겨울 채소는 맑은국이나 찜으로 부드럽게 익히고, 과일은 씨와 질긴 껍질을 확인해 제공합니다."
+          },
+          ja: {
+            vegetables: ["冬白菜", "大根", "ほうれん草", "長ねぎ"],
+            fruits: ["いちご", "みかん", "りんご", "梨"],
+            greens: ["ほうれん草", "冬白菜"],
+            tip: "冬野菜は薄味スープや蒸し料理でやわらかくし、果物は種と硬い皮を確認して出します。"
+          }
+        },
+        {
+          month: 2,
+          ko: {
+            vegetables: ["봄동", "냉이", "달래", "시금치"],
+            fruits: ["딸기", "한라봉", "천혜향", "사과"],
+            greens: ["봄동", "시금치", "냉이"],
+            tip: "향이 강한 봄나물은 소량만 잘게 다져 달걀찜이나 죽에 섞어 시작합니다."
+          },
+          ja: {
+            vegetables: ["春白菜", "なずな", "ヒメニラ", "ほうれん草"],
+            fruits: ["いちご", "ハルラボン", "柑橘", "りんご"],
+            greens: ["春白菜", "ほうれん草", "なずな"],
+            tip: "香りの強い春野菜は少量から、細かく刻んで卵料理やお粥に混ぜます。"
+          }
+        },
+        {
+          month: 3,
+          ko: {
+            vegetables: ["봄동", "냉이", "쑥", "미나리", "감자"],
+            fruits: ["딸기", "사과", "배"],
+            greens: ["봄동", "냉이", "미나리"],
+            tip: "나물은 질기지 않게 익힌 뒤 잘게 다져 죽, 전, 수프 형태로 제공합니다."
+          },
+          ja: {
+            vegetables: ["春白菜", "なずな", "よもぎ", "セリ", "じゃがいも"],
+            fruits: ["いちご", "りんご", "梨"],
+            greens: ["春白菜", "なずな", "セリ"],
+            tip: "山菜は硬さが残らないよう加熱し、細かく刻んでお粥・チヂミ・スープにします。"
+          }
+        },
+        {
+          month: 4,
+          ko: {
+            vegetables: ["아스파라거스", "두릅", "양배추", "완두콩"],
+            fruits: ["딸기", "참외", "토마토"],
+            greens: ["아스파라거스", "양배추", "완두콩"],
+            tip: "두릅은 향이 강해 소량만 사용하고, 완두콩은 충분히 익혀 부드럽게 으깹니다."
+          },
+          ja: {
+            vegetables: ["アスパラガス", "タラの芽", "キャベツ", "えんどう豆"],
+            fruits: ["いちご", "まくわうり", "トマト"],
+            greens: ["アスパラガス", "キャベツ", "えんどう豆"],
+            tip: "タラの芽は香りが強いので少量にし、えんどう豆は十分加熱してつぶします。"
+          }
+        },
+        {
+          month: 5,
+          ko: {
+            vegetables: ["양파", "감자", "오이", "애호박", "완두콩"],
+            fruits: ["참외", "토마토", "매실", "체리"],
+            greens: ["오이", "애호박", "완두콩"],
+            tip: "오이는 작게 썰고, 감자와 애호박은 찜이나 짧은 볶음으로 아침 메뉴에 활용합니다."
+          },
+          ja: {
+            vegetables: ["玉ねぎ", "じゃがいも", "きゅうり", "ズッキーニ風野菜", "えんどう豆"],
+            fruits: ["まくわうり", "トマト", "梅", "さくらんぼ"],
+            greens: ["きゅうり", "ズッキーニ風野菜", "えんどう豆"],
+            tip: "きゅうりは小さく切り、じゃがいもとズッキーニ風野菜は蒸すか短時間で炒めて使います。"
+          }
+        },
+        {
+          month: 6,
+          ko: {
+            vegetables: ["감자", "양파", "가지", "애호박", "강낭콩"],
+            fruits: ["참외", "수박", "블루베리", "산딸기"],
+            greens: ["애호박", "오이", "강낭콩"],
+            tip: "녹색 채소는 애호박·오이·강낭콩, 과일은 참외·수박·블루베리를 부드럽고 작게 손질해 활용합니다."
+          },
+          ja: {
+            vegetables: ["じゃがいも", "玉ねぎ", "なす", "ズッキーニ風野菜", "いんげん豆"],
+            fruits: ["まくわうり", "すいか", "ブルーベリー", "木いちご"],
+            greens: ["ズッキーニ風野菜", "きゅうり", "いんげん豆"],
+            tip: "緑の野菜はズッキーニ風野菜・きゅうり・いんげん豆、果物はまくわうり・すいか・ブルーベリーを小さくやわらかくして使います。"
+          }
+        },
+        {
+          month: 7,
+          ko: {
+            vegetables: ["옥수수", "오이", "가지", "토마토", "열무"],
+            fruits: ["수박", "복숭아", "자두", "포도"],
+            greens: ["오이", "열무", "토마토"],
+            tip: "옥수수 알갱이와 포도는 질식 위험을 줄이도록 작게 손질하고, 복숭아는 알레르기 반응을 확인합니다."
+          },
+          ja: {
+            vegetables: ["とうもろこし", "きゅうり", "なす", "トマト", "若大根葉"],
+            fruits: ["すいか", "桃", "すもも", "ぶどう"],
+            greens: ["きゅうり", "若大根葉", "トマト"],
+            tip: "とうもろこしの粒とぶどうは窒息リスクを避けるため小さくし、桃はアレルギー反応を確認します。"
+          }
+        },
+        {
+          month: 8,
+          ko: {
+            vegetables: ["옥수수", "감자", "열무", "오이", "토마토"],
+            fruits: ["포도", "복숭아", "자두", "무화과", "블루베리"],
+            greens: ["열무", "오이", "토마토"],
+            tip: "수분 많은 채소와 과일을 활용하되, 포도는 세로로 4등분하고 씨와 껍질을 조절합니다."
+          },
+          ja: {
+            vegetables: ["とうもろこし", "じゃがいも", "若大根葉", "きゅうり", "トマト"],
+            fruits: ["ぶどう", "桃", "すもも", "いちじく", "ブルーベリー"],
+            greens: ["若大根葉", "きゅうり", "トマト"],
+            tip: "水分の多い野菜と果物を使い、ぶどうは縦4等分にして種と皮を調整します。"
+          }
+        },
+        {
+          month: 9,
+          ko: {
+            vegetables: ["고구마", "토란", "버섯", "단호박", "연근"],
+            fruits: ["배", "사과", "포도", "무화과"],
+            greens: ["단호박", "버섯"],
+            tip: "토란과 연근은 충분히 익히고, 버섯은 잘게 다져 볶음밥이나 덮밥에 넣습니다."
+          },
+          ja: {
+            vegetables: ["さつまいも", "里芋", "きのこ", "かぼちゃ", "れんこん"],
+            fruits: ["梨", "りんご", "ぶどう", "いちじく"],
+            greens: ["かぼちゃ", "きのこ"],
+            tip: "里芋とれんこんは十分に加熱し、きのこは細かく刻んで炒めご飯や丼に使います。"
+          }
+        },
+        {
+          month: 10,
+          ko: {
+            vegetables: ["고구마", "단호박", "무", "배추", "버섯"],
+            fruits: ["사과", "배", "단감", "귤"],
+            greens: ["배추", "단호박"],
+            tip: "단호박·고구마는 찜으로 준비해 간식과 죽에 쓰고, 배추는 부드러운 국으로 활용합니다."
+          },
+          ja: {
+            vegetables: ["さつまいも", "かぼちゃ", "大根", "白菜", "きのこ"],
+            fruits: ["りんご", "梨", "甘柿", "みかん"],
+            greens: ["白菜", "かぼちゃ"],
+            tip: "かぼちゃ・さつまいもは蒸しておやつやお粥に使い、白菜はやわらかいスープにします。"
+          }
+        },
+        {
+          month: 11,
+          ko: {
+            vegetables: ["배추", "무", "늙은호박", "시금치", "연근"],
+            fruits: ["단감", "사과", "배", "귤"],
+            greens: ["배추", "시금치"],
+            tip: "연근은 푹 익혀 잘게 자르고, 단감은 작게 잘라 질식 위험을 줄입니다."
+          },
+          ja: {
+            vegetables: ["白菜", "大根", "熟成かぼちゃ", "ほうれん草", "れんこん"],
+            fruits: ["甘柿", "りんご", "梨", "みかん"],
+            greens: ["白菜", "ほうれん草"],
+            tip: "れんこんはやわらかく煮て刻み、甘柿は小さく切って窒息リスクを下げます。"
+          }
+        },
+        {
+          month: 12,
+          ko: {
+            vegetables: ["무", "배추", "시금치", "브로콜리", "대파"],
+            fruits: ["귤", "딸기", "한라봉", "사과", "배"],
+            greens: ["시금치", "브로콜리", "배추"],
+            tip: "브로콜리와 시금치는 짧게 데치고, 귤은 얇은 막과 씨를 확인해 제공합니다."
+          },
+          ja: {
+            vegetables: ["大根", "白菜", "ほうれん草", "ブロッコリー", "長ねぎ"],
+            fruits: ["みかん", "いちご", "ハルラボン", "りんご", "梨"],
+            greens: ["ほうれん草", "ブロッコリー", "白菜"],
+            tip: "ブロッコリーとほうれん草は短く茹で、みかんは薄皮と種を確認して出します。"
+          }
+        }
+      ];
+
+      const mealPlansByMonth = {
+        6: {
+          default: [
+          {
+          dayKo: "월요일", dayJa: "月曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "소고기 애호박 진밥", nameJa: "牛肉とズッキーニ風やわらかご飯", grams: ["밥 90g · 소고기 25g", "애호박 30g"], tags: ["철분", "제철"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "beef", amount: 25 }, { key: "zucchini", amount: 30 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "닭감자조림과 양배추찜", nameJa: "鶏じゃが煮とキャベツ蒸し", grams: ["밥 90g · 닭 30g", "감자 45g · 양배추 30g"], tags: ["단백질", "비타민 C"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "chicken", amount: 30 }, { key: "potato", amount: 45 }, { key: "cabbage", amount: 30 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "두부 가지 덮밥", nameJa: "豆腐となすの丼", grams: ["밥 85g · 두부 45g", "가지 35g"], tags: ["칼슘", "식이섬유"], ingredients: [{ key: "cookedRice", amount: 85 }, { key: "tofu", amount: 45 }, { key: "eggplant", amount: 35 }] }
+          ]
+        },
+        {
+          dayKo: "화요일", dayJa: "火曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "달걀 양파 죽", nameJa: "卵と玉ねぎのお粥", grams: ["죽 150g · 달걀 1/2개", "양파 20g"], tags: ["단백질"], ingredients: [{ key: "porridge", amount: 150 }, { key: "egg", amount: 0.5 }, { key: "onion", amount: 20 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "흰살생선 토마토 소스밥", nameJa: "白身魚のトマトソースご飯", grams: ["밥 90g · 생선 30g", "토마토 35g"], tags: ["생선", "리코펜"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "whiteFish", amount: 30 }, { key: "tomato", amount: 35 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "돼지안심 양배추 볶음밥", nameJa: "豚ヒレとキャベツの炒めご飯", grams: ["밥 90g · 돼지안심 30g", "양배추 35g"], tags: ["철분", "아연"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "pork", amount: 30 }, { key: "cabbage", amount: 35 }] }
+          ]
+        },
+        {
+          dayKo: "수요일", dayJa: "水曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "감자 브로콜리 수프", nameJa: "じゃがいもとブロッコリーのスープ", grams: ["감자 60g · 우유 80ml", "브로콜리 25g"], tags: ["칼슘", "비타민 C"], ingredients: [{ key: "potato", amount: 60 }, { key: "milk", amount: 80 }, { key: "broccoli", amount: 25 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "두부 애호박 덮밥", nameJa: "豆腐とズッキーニ風野菜の丼", grams: ["밥 90g · 두부 50g", "애호박 35g"], tags: ["두부", "제철"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "tofu", amount: 50 }, { key: "zucchini", amount: 35 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "소고기 오이 무른비빔밥", nameJa: "牛肉ときゅうりのやわらか混ぜご飯", grams: ["밥 90g · 소고기 25g", "오이 25g"], tags: ["철분", "수분"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "beef", amount: 25 }, { key: "cucumber", amount: 25 }] }
+          ]
+        },
+        {
+          dayKo: "목요일", dayJa: "木曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "요거트 오트밀과 블루베리", nameJa: "ヨーグルトオートミールとブルーベリー", grams: ["요거트 90g · 오트밀 20g", "블루베리 30g"], tags: ["칼슘", "과일"], ingredients: [{ key: "yogurt", amount: 90 }, { key: "oatmeal", amount: 20 }, { key: "blueberry", amount: 30 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "닭고기 가지찜 밥", nameJa: "鶏肉となすの蒸しご飯", grams: ["밥 90g · 닭 30g", "가지 40g"], tags: ["단백질", "찜"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "chicken", amount: 30 }, { key: "eggplant", amount: 40 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "달걀 토마토 볶음밥", nameJa: "卵とトマトの炒めご飯", grams: ["밥 85g · 달걀 1/2개", "토마토 40g"], tags: ["리코펜", "저염"], ingredients: [{ key: "cookedRice", amount: 85 }, { key: "egg", amount: 0.5 }, { key: "tomato", amount: 40 }] }
+          ]
+        },
+        {
+          dayKo: "금요일", dayJa: "金曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "양배추 달걀찜과 밥", nameJa: "キャベツ入り茶碗蒸しとご飯", grams: ["밥 80g · 달걀 1/2개", "양배추 25g"], tags: ["부드러움"], ingredients: [{ key: "cookedRice", amount: 80 }, { key: "egg", amount: 0.5 }, { key: "cabbage", amount: 25 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "고등어 감자조림", nameJa: "さばとじゃがいもの煮物", grams: ["밥 90g · 고등어 25g", "감자 45g"], tags: ["DHA", "가시주의"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "mackerel", amount: 25 }, { key: "potato", amount: 45 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "두부 양파 소보로밥", nameJa: "豆腐と玉ねぎのそぼろご飯", grams: ["밥 90g · 두부 50g", "양파 25g"], tags: ["칼슘", "단맛"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "tofu", amount: 50 }, { key: "onion", amount: 25 }] }
+          ]
+        },
+        {
+          dayKo: "토요일", dayJa: "土曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "참외 치즈 토스트", nameJa: "まくわうりとチーズトースト", grams: ["식빵 1/2장 · 치즈 1/2장", "참외 50g"], tags: ["칼슘", "과일"], ingredients: [{ key: "bread", amount: 0.5 }, { key: "cheese", amount: 0.5 }, { key: "koreanMelon", amount: 50 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "소고기 토마토 리조또", nameJa: "牛肉とトマトのリゾット", grams: ["밥 85g · 소고기 30g", "토마토 40g"], tags: ["철분", "리코펜"], ingredients: [{ key: "cookedRice", amount: 85 }, { key: "beef", amount: 30 }, { key: "tomato", amount: 40 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "닭고기 애호박 국수", nameJa: "鶏肉とズッキーニ風野菜のうどん", grams: ["면 80g · 닭 25g", "애호박 35g"], tags: ["수분", "저염국물"], ingredients: [{ key: "noodle", amount: 80 }, { key: "chicken", amount: 25 }, { key: "zucchini", amount: 35 }] }
+          ]
+        },
+        {
+          dayKo: "일요일", dayJa: "日曜日",
+          meals: [
+            { slotKo: "아침", slotJa: "朝", nameKo: "감자 달걀 팬케이크", nameJa: "じゃがいも卵パンケーキ", grams: ["감자 60g · 달걀 1/2개", "밀가루 8g"], tags: ["손잡이식"], ingredients: [{ key: "potato", amount: 60 }, { key: "egg", amount: 0.5 }, { key: "flour", amount: 8 }] },
+            { slotKo: "점심", slotJa: "昼", nameKo: "돼지안심 가지 덮밥", nameJa: "豚ヒレとなすの丼", grams: ["밥 90g · 돼지안심 30g", "가지 35g"], tags: ["철분", "제철"], ingredients: [{ key: "cookedRice", amount: 90 }, { key: "pork", amount: 30 }, { key: "eggplant", amount: 35 }] },
+            { slotKo: "저녁", slotJa: "夜", nameKo: "두부 양배추 맑은국밥", nameJa: "豆腐とキャベツの薄味スープご飯", grams: ["밥 80g · 두부 45g", "양배추 35g · 국물 60ml"], tags: ["마무리식", "저염"], ingredients: [{ key: "cookedRice", amount: 80 }, { key: "tofu", amount: 45 }, { key: "cabbage", amount: 35 }, { key: "soup", amount: 60 }] }
+          ]
+          }
+          ]
+        }
+      };
+
+      const ingredientMeta = {
+        cookedRice: { type: "grain" }, porridge: { type: "grain" },
+        beef: { type: "protein" }, pork: { type: "protein" }, chicken: { type: "protein" },
+        whiteFish: { type: "protein" }, mackerel: { type: "protein" }, tofu: { type: "protein" }, egg: { type: "protein" },
+        yogurt: { type: "dairy" }, milk: { type: "dairy" }, cheese: { type: "dairy" },
+        oatmeal: { type: "other" }, bread: { type: "other" }, noodle: { type: "other" }, flour: { type: "other" },
+        zucchini: { type: "vegetable" }, potato: { type: "vegetable" }, cabbage: { type: "vegetable" }, eggplant: { type: "vegetable" },
+        onion: { type: "vegetable" }, tomato: { type: "vegetable" }, cucumber: { type: "vegetable" }, broccoli: { type: "vegetable" },
+        koreanMelon: { type: "fruit" }, blueberry: { type: "fruit" }, soup: { type: "other" }
+      };
+
+      const vegetableGuides = {
+        zucchini: { ko: "애호박", ja: "ズッキーニ風野菜", descKo: "3-5분 짧게 익혀 덮밥과 진밥에 사용합니다.", descJa: "3-5分だけ加熱し、丼ややわらかご飯に使います。", timeKo: "시간: 얇게 썰어 찜 5-7분, 볶음은 부드러워지면 종료", timeJa: "時間: 薄切りで蒸し5-7分、炒めはやわらかくなったら終了" },
+        cabbage: { ko: "양배추", ja: "キャベツ", descKo: "삶기보다 찜으로 익히고, 잘게 다져 달걀찜에 넣습니다.", descJa: "茹でるより蒸し、細かく刻んで茶碗蒸しに入れます。", timeKo: "시간: 얇게 썬 양배추 찜 8-12분, 잘게 다지면 중간부터 확인", timeJa: "時間: 細切りキャベツは蒸し8-12分、細かく切る場合は途中で確認" },
+        potato: { ko: "감자", ja: "じゃがいも", descKo: "껍질째 찐 뒤 껍질을 제거하면 비타민 C 손실을 줄일 수 있습니다.", descJa: "皮つきで蒸してから皮をむくとビタミンCの損失を抑えられます。", timeKo: "시간: 작은 감자/조각 찜 10-15분, 포크가 쉽게 들어가면 종료", timeJa: "時間: 小さめ/一口大は蒸し10-15分、フォークが通れば終了" },
+        eggplant: { ko: "가지", ja: "なす", descKo: "물에 오래 담그지 않고 찜으로 부드럽게 익혀 사용합니다.", descJa: "水に長くさらさず、蒸してやわらかくします。", timeKo: "시간: 작게 썰어 찜 5분부터 확인, 30초 간격으로 부드러움 확인", timeJa: "時間: 小さく切って蒸し5分から確認、30秒ごとにやわらかさを見る" },
+        cucumber: { ko: "오이", ja: "きゅうり", descKo: "껍질 일부 제거 후 아주 작게 썰고, 씨가 많은 부분은 조절합니다.", descJa: "皮を一部むき、小さく切ります。種が多い部分は調整します。", timeKo: "시간: 생으로 0분, 질기면 전자레인지찜 1분 후 식혀 제공", timeJa: "時間: 生なら0分、硬ければ電子レンジ蒸し1分後に冷ます" },
+        tomato: { ko: "토마토", ja: "トマト", descKo: "껍질 제거 후 기름 몇 방울과 익히면 리코펜 흡수에 도움이 됩니다.", descJa: "皮をむき、油を数滴加えて加熱するとリコピン吸収を助けます。", timeKo: "시간: 껍질 제거용 데침 30-60초, 소스는 2-3분만 짧게", timeJa: "時間: 皮むき用の湯通し30-60秒、ソースは2-3分だけ短く" },
+        onion: { ko: "양파", ja: "玉ねぎ", descKo: "충분히 익혀 단맛을 내고, 간장 없이도 풍미를 보완합니다.", descJa: "しっかり加熱して甘みを出し、醤油なしでも風味を補います。", timeKo: "시간: 잘게 다져 찜/볶음 4-6분, 투명하고 부드러우면 종료", timeJa: "時間: 細かく切って蒸し/炒め4-6分、透明でやわらかければ終了" },
+        broccoli: { ko: "브로콜리", ja: "ブロッコリー", descKo: "짧게 데치거나 찐 뒤 송이를 아주 작게 잘라 수프에 넣습니다.", descJa: "短く茹でるか蒸して、小房をさらに小さくしてスープに入れます。", timeKo: "시간: 작은 송이 데침 2-3분 또는 찜 5분, 선명한 초록색일 때 종료", timeJa: "時間: 小房は茹で2-3分または蒸し5分、鮮やかな緑で終了" }
+      };
+
+      const pad = (value) => String(value).padStart(2, "0");
+      const formatDate = (date) => `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())}`;
+      const setText = (name, value) => {
+        document.querySelectorAll(`[data-dynamic="${name}"]`).forEach((element) => {
+          element.textContent = value;
+        });
+      };
+      const getActiveMealPlan = (month) => {
+        const monthPlans = mealPlansByMonth[month] || mealPlansByMonth[6];
+        return monthPlans[reportConfig.mealPlanWeekKey] || monthPlans.default;
+      };
+      const tagJa = {
+        "철분": "鉄分",
+        "제철": "旬",
+        "단백질": "たんぱく質",
+        "비타민 C": "ビタミンC",
+        "칼슘": "カルシウム",
+        "식이섬유": "食物繊維",
+        "생선": "魚",
+        "리코펜": "リコピン",
+        "아연": "亜鉛",
+        "두부": "豆腐",
+        "수분": "水分",
+        "과일": "果物",
+        "찜": "蒸し",
+        "저염": "薄味",
+        "부드러움": "やわらかい食感",
+        "DHA": "DHA",
+        "가시주의": "骨に注意",
+        "단맛": "自然な甘み",
+        "저염국물": "薄味スープ",
+        "손잡이식": "手づかみ食べ",
+        "마무리식": "締めの食事"
+      };
+      const gramJaTerms = [
+        ["돼지안심", "豚ヒレ"],
+        ["흰살생선", "白身魚"],
+        ["고등어", "さば"],
+        ["소고기", "牛肉"],
+        ["달걀", "卵"],
+        ["양배추", "キャベツ"],
+        ["브로콜리", "ブロッコリー"],
+        ["요거트", "ヨーグルト"],
+        ["오트밀", "オートミール"],
+        ["블루베리", "ブルーベリー"],
+        ["식빵", "食パン"],
+        ["치즈", "チーズ"],
+        ["애호박", "ズッキーニ風野菜"],
+        ["토마토", "トマト"],
+        ["참외", "まくわうり"],
+        ["밀가루", "小麦粉"],
+        ["국물", "スープ"],
+        ["생선", "魚"],
+        ["두부", "豆腐"],
+        ["감자", "じゃがいも"],
+        ["양파", "玉ねぎ"],
+        ["가지", "なす"],
+        ["오이", "きゅうり"],
+        ["우유", "牛乳"],
+        ["밥", "ご飯"],
+        ["죽", "お粥"],
+        ["닭", "鶏肉"],
+        ["면", "麺"],
+        ["장", "枚"],
+        ["개", "個"]
+      ];
+      const toJapaneseGramLine = (line) => gramJaTerms.reduce((text, [ko, ja]) => text.replaceAll(ko, ja), line);
+      const tagMarkup = (tag) => `<span class="tag"><span class="lang-ko">${tag}</span><span class="lang-ja">${tagJa[tag] || tag}</span></span>`;
+      const sumIngredients = (plan) => {
+        const totals = {};
+        plan.flatMap((day) => day.meals).forEach((meal) => {
+          meal.ingredients.forEach(({ key, amount }) => {
+            totals[key] = (totals[key] || 0) + amount;
+          });
+        });
+        return totals;
+      };
+      const proteinIconSvg = (key) => {
+        const icons = {
+          beef: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 22c0-8 8-14 17-11 8 3 9 12 4 17-6 6-21 4-21-6z" fill="#d96e5f" stroke="#91483f" stroke-width="2.5"/><path d="M16 16c5-3 12-1 14 4" stroke="#ffd7cd" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+          pork: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 22c1-9 10-14 19-10 7 3 8 12 2 17-7 5-22 2-21-7z" fill="#e8a0a4" stroke="#a95c64" stroke-width="2.5"/><path d="M16 16c5-2 10-1 13 4" stroke="#ffe3e5" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+          chicken: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 23c2-8 11-12 18-7 5 4 3 12-4 15-8 4-17-1-14-8z" fill="#f1bc72" stroke="#a56b2f" stroke-width="2.5"/><path d="M9 25c-4 2-5 6-2 8 3 2 7-1 8-5" fill="#fff2d5" stroke="#a56b2f" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+          whiteFish: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 20c6-8 18-10 26 0-8 10-20 8-26 0z" fill="#8fc7d2" stroke="#4f7f8f" stroke-width="2.5"/><path d="M31 20l5-5v10z" fill="#8fc7d2" stroke="#4f7f8f" stroke-width="2.5"/><circle cx="15" cy="18" r="1.8" fill="#27312f"/></svg>`,
+          mackerel: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 20c6-8 18-10 26 0-8 10-20 8-26 0z" fill="#7aa7b7" stroke="#405f6c" stroke-width="2.5"/><path d="M31 20l5-5v10z" fill="#7aa7b7" stroke="#405f6c" stroke-width="2.5"/><path d="M17 14l-5 12M24 14l-5 12" stroke="#e8f5f7" stroke-width="2" stroke-linecap="round"/><circle cx="15" cy="18" r="1.8" fill="#27312f"/></svg>`,
+          tofu: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 13h22v18H9z" fill="#fff7df" stroke="#c9a85e" stroke-width="2.5"/><path d="M14 13v18M25 13v18M9 22h22" stroke="#ead9aa" stroke-width="2"/></svg>`,
+          egg: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 7c7 0 12 9 12 17 0 7-5 11-12 11S8 31 8 24C8 16 13 7 20 7z" fill="#fff6df" stroke="#c9a85e" stroke-width="2.5"/><circle cx="20" cy="25" r="5" fill="#f5c56b"/></svg>`,
+          yogurt: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 13h16l-2 20H14z" fill="#ffffff" stroke="#7aa7b7" stroke-width="2.5"/><path d="M10 9h20v6H10z" fill="#bfe3ea" stroke="#7aa7b7" stroke-width="2.5"/><path d="M16 22c3 2 6 2 9 0" stroke="#a784b8" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+          milk: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 8h10l3 7v18H11V15z" fill="#ffffff" stroke="#7aa7b7" stroke-width="2.5"/><path d="M14 8h10M12 17h15" stroke="#7aa7b7" stroke-width="2.5"/><path d="M15 23h8" stroke="#bfe3ea" stroke-width="3" stroke-linecap="round"/></svg>`,
+          cheese: `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 27l24-14v18H8z" fill="#f5c56b" stroke="#a97923" stroke-width="2.5"/><circle cx="23" cy="25" r="2" fill="#fff2c8"/><circle cx="29" cy="20" r="1.8" fill="#fff2c8"/></svg>`
+        };
+        return icons[key] || "";
+      };
+      const renderProteinIcons = (meal) => {
+        const labels = {
+          beef: "소고기 · 牛肉",
+          pork: "돼지고기 · 豚肉",
+          chicken: "닭고기 · 鶏肉",
+          whiteFish: "흰살생선 · 白身魚",
+          mackerel: "고등어 · さば",
+          tofu: "두부 · 豆腐",
+          egg: "달걀 · 卵",
+          yogurt: "요거트 · ヨーグルト",
+          milk: "우유 · 牛乳",
+          cheese: "치즈 · チーズ"
+        };
+        const proteinKeys = meal.ingredients
+          .map(({ key }) => key)
+          .filter((key) => ["beef", "pork", "chicken", "whiteFish", "mackerel", "tofu", "egg", "yogurt", "milk", "cheese"].includes(key));
+        const uniqueKeys = [...new Set(proteinKeys)];
+        if (!uniqueKeys.length) return "";
+        return `<div class="protein-icons">${uniqueKeys.map((key) => `<span class="protein-icon" title="${labels[key]}">${proteinIconSvg(key)}</span>`).join("")}</div>`;
+      };
+      const recipeByMeal = (meal) => {
+        const has = (key) => meal.ingredients.some((item) => item.key === key);
+        const hasMeat = has("beef") || has("pork") || has("chicken");
+        const hasFish = has("whiteFish") || has("mackerel");
+        const hasDairy = has("yogurt") || has("milk") || has("cheese");
+        const isRice = meal.ingredients.some((item) => item.key === "cookedRice");
+        const prepKo = `계량한 재료를 준비합니다: ${meal.grams.join(", ")}. 채소는 0.5cm 안팎으로 작게 썰고, 고기/생선은 더 잘게 다집니다.`;
+        const prepJa = `材料を計量します: ${meal.grams.map(toJapaneseGramLine).join("、")}。野菜は約0.5cmに小さく切り、肉/魚はさらに細かくします。`;
+        const proteinKo = hasFish ? "생선은 찜기나 팬에 물 2-3큰술을 넣고 4-6분 익힌 뒤 살을 잘게 부수고 가시를 다시 확인합니다." :
+          hasMeat ? "팬에 물 2-3큰술을 넣고 고기를 먼저 볶듯이 익힙니다. 색이 완전히 변하고 분홍빛이 없어질 때까지 중약불로 익힙니다." :
+          has("egg") ? "달걀은 잘 풀어 마지막에 넣고 계속 저어 완전히 익힙니다. 촉촉해도 흐르는 반숙은 남기지 않습니다." :
+          has("tofu") ? "두부는 끓는 물에 1분 데치거나 팬에서 으깨며 2-3분 데워 속까지 따뜻하게 만듭니다." :
+          hasDairy ? "요거트/우유/치즈는 무가당 또는 저염 제품을 쓰고, 우유는 끓이지 말고 따뜻해질 정도로만 데웁니다." :
+          "단백질 재료는 아이가 씹기 쉬운 크기로 조절합니다.";
+        const proteinJa = hasFish ? "魚は蒸し器、またはフライパンに水大さじ2-3を入れて4-6分加熱し、身をほぐして骨をもう一度確認します。" :
+          hasMeat ? "フライパンに水大さじ2-3を入れ、肉を先に炒めるように加熱します。色が完全に変わり、ピンク色が残らないまで中弱火で火を通します。" :
+          has("egg") ? "卵はよく溶き、最後に入れて混ぜながら完全に火を通します。しっとりしていても半熟は残しません。" :
+          has("tofu") ? "豆腐は熱湯で1分湯通しするか、フライパンでつぶしながら2-3分温めます。" :
+          hasDairy ? "ヨーグルト/牛乳/チーズは無糖または薄味を使い、牛乳は沸騰させず温まる程度にします。" :
+          "たんぱく質食材は食べやすい大きさにします。";
+        const vegKo = has("potato") ? "감자는 젓가락이 쉽게 들어갈 만큼 먼저 찌거나 삶은 뒤 으깨서 사용합니다." :
+          has("cabbage") || has("eggplant") || has("zucchini") || has("broccoli") ? "채소는 물 2큰술을 넣고 뚜껑을 덮어 3-5분 먼저 익힌 뒤, 손가락으로 눌렀을 때 쉽게 으깨지는지 봅니다." :
+          has("tomato") ? "토마토는 껍질이 질기면 30-60초 데쳐 껍질을 벗기고 잘게 다집니다." :
+          has("cucumber") ? "오이는 껍질 일부와 씨 많은 부분을 제거하고 아주 작게 썹니다. 질기면 전자레인지에 1분 데웁니다." :
+          "채소는 숨이 죽고 부드러워질 때까지만 짧게 익힙니다.";
+        const vegJa = has("potato") ? "じゃがいもは箸がすっと入るまで先に蒸す、または茹でてからつぶします。" :
+          has("cabbage") || has("eggplant") || has("zucchini") || has("broccoli") ? "野菜は水大さじ2を入れてふたをし、3-5分先に加熱します。指で押して簡単につぶれるか確認します。" :
+          has("tomato") ? "トマトの皮が硬い場合は30-60秒湯通しして皮をむき、細かく刻みます。" :
+          has("cucumber") ? "きゅうりは皮を一部むき、種が多い部分を取り、小さく切ります。硬ければ電子レンジで1分温めます。" :
+          "野菜はしんなりしてやわらかくなるまで短時間で加熱します。";
+        const finishKo = meal.nameKo.includes("죽") ? "밥/죽이 되직하면 물을 1-2큰술씩 추가하면서 약불로 저어 농도를 맞춥니다." :
+          meal.nameKo.includes("수프") ? "익힌 재료를 포크나 매셔로 으깨고 우유/물로 묽기를 맞춘 뒤 약불에서 1분만 더 데웁니다." :
+          meal.nameKo.includes("국수") ? "삶은 면은 2-3cm 길이로 자르고, 익힌 고기·채소와 섞어 국물은 50-80ml만 남깁니다." :
+          meal.nameKo.includes("토스트") ? "토스트는 손가락 두 마디보다 작게 자르고, 치즈가 녹으면 바로 식혀 제공합니다." :
+          meal.nameKo.includes("팬케이크") ? "반죽은 한입 크기로 작게 부치고, 앞뒤로 2-3분씩 익힌 뒤 속까지 익었는지 잘라 확인합니다." :
+          isRice ? "밥을 넣고 물 1-3큰술을 더해 1-2분 섞어 촉촉하게 만듭니다. 뭉친 고기나 큰 채소 조각은 숟가락으로 더 부숩니다." :
+          "재료를 모두 섞은 뒤 너무 되직하면 물을 조금 더해 삼키기 쉬운 농도로 맞춥니다.";
+        const finishJa = meal.nameJa.includes("お粥") ? "お粥が固ければ水を大さじ1-2ずつ足し、弱火で混ぜながら濃度を調整します。" :
+          meal.nameJa.includes("スープ") ? "加熱した材料をフォークやマッシャーでつぶし、牛乳/水で濃度を調整して弱火で1分だけ温めます。" :
+          meal.nameJa.includes("うどん") ? "茹でた麺は2-3cmに切り、加熱した肉・野菜と混ぜ、スープは50-80mlだけ残します。" :
+          meal.nameJa.includes("トースト") ? "トーストは指二関節より小さく切り、チーズが溶けたら冷まして出します。" :
+          meal.nameJa.includes("パンケーキ") ? "生地は一口サイズで小さく焼き、両面を2-3分ずつ加熱して、中まで火が通ったか切って確認します。" :
+          isRice ? "ご飯を入れ、水を大さじ1-3足して1-2分混ぜ、しっとりさせます。肉や野菜の大きな塊はスプーンでさらに崩します。" :
+          "材料をすべて合わせ、固ければ水を少し足して飲み込みやすい濃度にします。";
+
+        return {
+          ko: [
+            prepKo,
+            proteinKo,
+            vegKo,
+            finishKo,
+            "마지막에 간을 봅니다. 기본은 무염이고, 필요할 때만 간장/된장을 1-2방울 수준으로 사용합니다."
+          ],
+          ja: [
+            prepJa,
+            proteinJa,
+            vegJa,
+            finishJa,
+            "最後に味を確認します。基本は無塩、必要な時だけ醤油/味噌をごく少量にします。"
+          ],
+          noteKo: has("whiteFish") || has("mackerel") ? "가시 확인 필수. 뜨거운 부분이 없도록 충분히 식혀 주세요." : "뜨거운 부분이 없도록 식히고, 한입 크기로 나눠 주세요.",
+          noteJa: has("whiteFish") || has("mackerel") ? "骨の確認必須。熱い部分が残らないよう十分に冷まします。" : "熱い部分が残らないよう冷まし、一口サイズにします。"
+        };
+      };
+      const renderRecipe = (meal) => {
+        const recipe = recipeByMeal(meal);
+        return `
+          <details class="recipe-toggle">
+            <summary><span class="lang-ko">간단 조리법</span><span class="lang-ja">簡単レシピ</span></summary>
+            <div class="recipe-body">
+              <ol class="lang-ko">${recipe.ko.map((step) => `<li>${step}</li>`).join("")}</ol>
+              <ol class="lang-ja">${recipe.ja.map((step) => `<li>${step}</li>`).join("")}</ol>
+              <div class="recipe-note"><span class="lang-ko">${recipe.noteKo}</span><span class="lang-ja">${recipe.noteJa}</span></div>
+            </div>
+          </details>
+        `;
+      };
+      const renderWeekPlan = (plan) => {
+        const container = document.querySelector('[data-render="weekly-meals"]');
+        if (!container) return;
+        container.innerHTML = plan.map((day) => `
+          <article class="day-card">
+            <div class="day-head"><span class="lang-ko">${day.dayKo}</span><span class="lang-ja">${day.dayJa}</span></div>
+            ${day.meals.map((meal) => `
+              <div class="meal">
+                <div class="meal-label"><span class="lang-ko">${meal.slotKo}</span><span class="lang-ja">${meal.slotJa}</span></div>
+                <p class="meal-name"><span class="lang-ko">${meal.nameKo}</span><span class="lang-ja">${meal.nameJa}</span></p>
+                <div class="grams">${meal.grams.map((line) => `<span><span class="lang-ko">${line}</span><span class="lang-ja">${toJapaneseGramLine(line)}</span></span>`).join("")}</div>
+                ${renderProteinIcons(meal)}
+                ${renderRecipe(meal)}
+                <div class="meal-tags">${meal.tags.map(tagMarkup).join("")}</div>
+              </div>
+            `).join("")}
+          </article>
+        `).join("");
+      };
+      const vegetableSvg = (key) => {
+        const svgs = {
+          zucchini: `<path d="M30 68c6-30 28-45 50-35 5 24-13 48-45 52-7 1-9-7-5-17z" fill="#8fbf73" stroke="#456b43" stroke-width="4" /><path d="M37 70c11-13 24-22 40-28" stroke="#dcebd7" stroke-width="4" fill="none" stroke-linecap="round" /><circle cx="47" cy="63" r="3" fill="#dcebd7" /><circle cx="58" cy="55" r="3" fill="#dcebd7" /><circle cx="68" cy="48" r="3" fill="#dcebd7" /><path d="M78 32c3-7 9-9 14-6" stroke="#5e8d5e" stroke-width="5" fill="none" stroke-linecap="round" />`,
+          cabbage: `<circle cx="51" cy="56" r="31" fill="#c9dfaf" stroke="#75955d" stroke-width="4" /><path d="M29 56c13-17 35-23 48-5 8 11 4 25-10 31" stroke="#75955d" stroke-width="4" fill="none" stroke-linecap="round" /><path d="M40 28c-7 14-4 28 10 42M62 30c11 13 12 28 2 45M28 69c14-9 32-12 51-4" stroke="#eef6df" stroke-width="5" fill="none" stroke-linecap="round" /><path d="M35 39c13 1 27 7 42 19" stroke="#8aaa65" stroke-width="4" fill="none" stroke-linecap="round" />`,
+          potato: `<path d="M23 60c2-18 18-31 38-28 17 2 28 15 25 31-4 20-23 30-43 25-13-3-22-14-20-28z" fill="#d9b56d" stroke="#9d7a3e" stroke-width="4" /><circle cx="41" cy="50" r="3" fill="#b48746" /><circle cx="60" cy="45" r="2.8" fill="#b48746" /><circle cx="70" cy="63" r="3.2" fill="#b48746" /><path d="M33 67c13 7 28 7 44-3M34 54c11-8 26-11 43-6" stroke="#f2d68e" stroke-width="4" fill="none" stroke-linecap="round" />`,
+          eggplant: `<path d="M44 20c30 8 40 39 23 61-12 15-36 10-43-6-9-22-1-46 20-55z" fill="#8d65a8" stroke="#5f3d76" stroke-width="4" /><path d="M47 22c-1-9 7-15 17-12" stroke="#5e8d5e" stroke-width="6" fill="none" stroke-linecap="round" /><path d="M36 42c-8 14-9 27-1 41M51 31c12 14 15 31 6 51" stroke="#cdb7dc" stroke-width="4" fill="none" stroke-linecap="round" /><ellipse cx="53" cy="55" rx="8" ry="20" fill="#a784b8" opacity=".35" />`,
+          cucumber: `<path d="M38 18c22 0 36 18 30 44-5 22-22 33-39 25-15-7-16-25-6-42 7-11 10-21 15-27z" fill="#79b56d" stroke="#4f7f45" stroke-width="4" /><path d="M42 24c10 20 8 39-8 56" stroke="#dcebd7" stroke-width="5" fill="none" stroke-linecap="round" /><path d="M33 43c12 0 24 4 35 11M29 61c10-1 21 2 31 9" stroke="#a9cf8c" stroke-width="3.5" fill="none" stroke-linecap="round" /><circle cx="49" cy="44" r="2.5" fill="#dcebd7" /><circle cx="55" cy="60" r="2.5" fill="#dcebd7" />`,
+          tomato: `<circle cx="51" cy="59" r="29" fill="#e87765" stroke="#bf5146" stroke-width="4" /><path d="M51 33l-10-14 11 7 11-9-3 14 13-4-10 10" fill="#6c9d5f" stroke="#4d7d44" stroke-width="3" stroke-linejoin="round" /><path d="M37 52c9-8 22-9 34-1M35 66c11 8 23 9 36 1" stroke="#f7c0b5" stroke-width="4" fill="none" stroke-linecap="round" /><circle cx="42" cy="58" r="3" fill="#f49a8c" /><circle cx="61" cy="70" r="2.8" fill="#f49a8c" />`,
+          onion: `<path d="M50 14c9 10 26 21 27 43 1 21-11 33-27 33S22 78 23 57c1-22 18-33 27-43z" fill="#efd58f" stroke="#b38b45" stroke-width="4" /><path d="M50 16c-4 16-7 32-7 49 0 11 3 19 7 24" stroke="#b38b45" stroke-width="4" fill="none" stroke-linecap="round" opacity=".68" /><path d="M50 16c5 16 8 32 7 49 0 11-3 19-7 24" stroke="#b38b45" stroke-width="4" fill="none" stroke-linecap="round" opacity=".68" /><path d="M38 31c-7 11-10 22-9 34 1 10 6 18 14 23" stroke="#d7ae5d" stroke-width="4" fill="none" stroke-linecap="round" /><path d="M62 31c7 11 10 22 9 34-1 10-6 18-14 23" stroke="#d7ae5d" stroke-width="4" fill="none" stroke-linecap="round" /><path d="M42 18c2-8 8-11 16-8M45 88c3 4 7 4 10 0M39 92c8 5 15 5 23 0" stroke="#7c8f55" stroke-width="4" fill="none" stroke-linecap="round" />`,
+          broccoli: `<path d="M48 46c-13 2-24-5-22-17 2-11 15-14 24-7 8-10 25-6 27 6 2 14-12 21-29 18z" fill="#78a083" stroke="#456b43" stroke-width="4" /><path d="M48 46c-3 14-7 27-15 38h30c-7-11-11-24-15-38z" fill="#8fbf73" stroke="#456b43" stroke-width="4" /><circle cx="34" cy="30" r="8" fill="#9bc28a" /><circle cx="50" cy="25" r="9" fill="#9bc28a" /><circle cx="66" cy="31" r="8" fill="#9bc28a" />`
+        };
+        return `<svg viewBox="0 0 100 100" aria-hidden="true">${svgs[key] || svgs.zucchini}</svg>`;
+      };
+      const renderVegetableGuides = (plan) => {
+        const container = document.querySelector('[data-render="weekly-vegetables"]');
+        if (!container) return;
+        const used = [];
+        plan.flatMap((day) => day.meals).forEach((meal) => {
+          meal.ingredients.forEach(({ key }) => {
+            if (ingredientMeta[key]?.type === "vegetable" && vegetableGuides[key] && !used.includes(key)) used.push(key);
+          });
+        });
+        container.innerHTML = used.map((key) => {
+          const guide = vegetableGuides[key];
+          return `
+            <article class="veg-card">
+              <div class="veg-visual">${vegetableSvg(key)}</div>
+              <h3><span class="lang-ko">${guide.ko}</span><span class="lang-ja">${guide.ja}</span></h3>
+              <p><span class="lang-ko">${guide.descKo}</span><span class="lang-ja">${guide.descJa}</span></p>
+              <span class="cook-time"><span class="lang-ko">${guide.timeKo}</span><span class="lang-ja">${guide.timeJa}</span></span>
+            </article>
+          `;
+        }).join("");
+      };
+      const renderShoppingLists = (plan) => {
+        const totals = sumIngredients(plan);
+        const rows = [
+          { koText: `쌀/밥: 식단표 조리 후 밥 기준 약 ${Math.round(totals.cookedRice || 0).toLocaleString()}g + 죽 ${totals.porridge ? "1회" : "0회"}`, koAmount: "생쌀 약 500g", jaText: `米/ご飯: 献立表の炊飯後ご飯 約${Math.round(totals.cookedRice || 0).toLocaleString()}g + お粥${totals.porridge ? "1回" : "0回"}`, jaAmount: "生米 約500g" },
+          { koText: `소고기 다짐육 또는 국거리: 식단 합산 ${totals.beef || 0}g`, koAmount: "구매 100g", jaText: `牛ひき肉または煮込み用牛肉: 献立合計${totals.beef || 0}g`, jaAmount: "購入100g" },
+          { koText: `돼지안심: 식단 합산 ${totals.pork || 0}g`, koAmount: "구매 70-80g", jaText: `豚ヒレ肉: 献立合計${totals.pork || 0}g`, jaAmount: "購入70-80g" },
+          { koText: `닭다리살 또는 닭안심: 식단 합산 ${totals.chicken || 0}g`, koAmount: "구매 100g", jaText: `鶏もも肉または鶏ささみ: 献立合計${totals.chicken || 0}g`, jaAmount: "購入100g" },
+          { koText: `흰살생선 ${totals.whiteFish || 0}g, 고등어 순살 ${totals.mackerel || 0}g`, koAmount: "각 1회분", jaText: `白身魚${totals.whiteFish || 0}g、骨なしさば${totals.mackerel || 0}g`, jaAmount: "各1回分" },
+          { koText: `두부 ${totals.tofu || 0}g, 달걀 ${Math.ceil(totals.egg || 0)}개, 무가당 요거트 ${totals.yogurt || 0}g`, koAmount: "소포장 1개씩", jaText: `豆腐${totals.tofu || 0}g、卵${Math.ceil(totals.egg || 0)}個、無糖ヨーグルト${totals.yogurt || 0}g`, jaAmount: "小パック各1" },
+          { koText: `우유 ${totals.milk || 0}ml, 치즈 ${totals.cheese || 0}장, 오트밀 ${totals.oatmeal || 0}g, 식빵 ${totals.bread || 0}장, 면 ${totals.noodle || 0}g, 밀가루 ${totals.flour || 0}g`, koAmount: "보유분 확인", jaText: `牛乳${totals.milk || 0}ml、チーズ${totals.cheese || 0}枚、オートミール${totals.oatmeal || 0}g、食パン${totals.bread || 0}枚、麺${totals.noodle || 0}g、小麦粉${totals.flour || 0}g`, jaAmount: "在庫確認" },
+          { koText: `감자 ${totals.potato || 0}g, 양배추 ${totals.cabbage || 0}g, 토마토 ${totals.tomato || 0}g, 가지 ${totals.eggplant || 0}g, 애호박 ${totals.zucchini || 0}g`, koAmount: "손질 후 기준", jaText: `じゃがいも${totals.potato || 0}g、キャベツ${totals.cabbage || 0}g、トマト${totals.tomato || 0}g、なす${totals.eggplant || 0}g、ズッキーニ風野菜${totals.zucchini || 0}g`, jaAmount: "下処理後基準" },
+          { koText: `양파 ${totals.onion || 0}g, 오이 ${totals.cucumber || 0}g, 브로콜리 ${totals.broccoli || 0}g`, koAmount: "소량", jaText: `玉ねぎ${totals.onion || 0}g、きゅうり${totals.cucumber || 0}g、ブロッコリー${totals.broccoli || 0}g`, jaAmount: "少量" },
+          { koText: `참외 ${totals.koreanMelon || 0}g, 블루베리 ${totals.blueberry || 0}g`, koAmount: "과일 2종", jaText: `まくわうり${totals.koreanMelon || 0}g、ブルーベリー${totals.blueberry || 0}g`, jaAmount: "果物2種" }
+        ];
+        const renderRows = (lang) => rows.map((row) => `<li><span class="box"></span><span>${row[`${lang}Text`]}</span><span class="amount">${row[`${lang}Amount`]}</span></li>`).join("");
+        const ko = document.querySelector('[data-render="shopping-list-ko"]');
+        const ja = document.querySelector('[data-render="shopping-list-ja"]');
+        if (ko) ko.innerHTML = renderRows("ko");
+        if (ja) ja.innerHTML = renderRows("ja");
+      };
+      const classifyMealTags = () => {
+        const groups = [
+          { className: "protein", words: ["철분", "단백질", "생선", "두부", "DHA", "아연", "protein", "魚", "豆腐", "鉄分", "亜鉛"] },
+          { className: "calcium", words: ["칼슘", "요거트", "치즈", "우유", "カルシウム", "ヨーグルト", "チーズ", "牛乳"] },
+          { className: "season", words: ["제철", "과일", "리코펜", "수분", "旬", "果物", "リコピン", "水分"] },
+          { className: "vegetable", words: ["비타민", "식이섬유", "찜", "단맛", "채소", "ビタミン", "食物繊維", "蒸し", "自然な甘み", "野菜"] },
+          { className: "safety", words: ["가시주의", "저염", "저염국물", "마무리식", "손잡이식", "骨に注意", "薄味", "締めの食事", "手づかみ食べ"] }
+        ];
+
+        document.querySelectorAll(".meal-tags .tag").forEach((tag) => {
+          const text = tag.textContent.trim();
+          const group = groups.find(({ words }) => words.some((word) => text.includes(word)));
+          if (group) tag.classList.add(group.className);
+        });
+      };
+      const getWeekRange = (date) => {
+        const monday = new Date(date);
+        const day = monday.getDay();
+        const diff = day === 0 ? -6 : 1 - day;
+        monday.setDate(monday.getDate() + diff);
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
+        return `${formatDate(monday)}-${formatDate(sunday)}`;
+      };
+      const getAgeMonths = (birthDate, date) => {
+        let months = (date.getFullYear() - birthDate.getFullYear()) * 12 + date.getMonth() - birthDate.getMonth();
+        if (date.getDate() < birthDate.getDate()) months -= 1;
+        return Math.max(months, 0);
+      };
+
+      const monthNumber = today.getMonth() + 1;
+      const monthData = seasonalByMonth.find((item) => item.month === monthNumber) || seasonalByMonth[0];
+      const activeMealPlan = getActiveMealPlan(monthNumber);
+      const ageMonths = getAgeMonths(otohaBirthday, today);
+
+      setText("week-range", getWeekRange(today));
+      setText("age-months-ko", `${ageMonths}개월`);
+      setText("age-months-ja", `${ageMonths}か月`);
+      setText("season-title-ko", `${monthNumber}월 추천`);
+      setText("season-title-ja", `${monthNumber}月おすすめ`);
+      setText("season-copy-ko", monthData.ko.tip);
+      setText("season-copy-ja", monthData.ja.tip);
+      setText("season-count-ko", `${monthData.ko.vegetables.length}종`);
+      setText("season-count-ja", `${monthData.ja.vegetables.length}種`);
+      renderWeekPlan(activeMealPlan);
+      renderVegetableGuides(activeMealPlan);
+      renderShoppingLists(activeMealPlan);
+      classifyMealTags();
+    })();
+  </script>
+</body>
+</html>
