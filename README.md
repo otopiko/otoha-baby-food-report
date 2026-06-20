@@ -11,4 +11,3 @@ Open `index.html` in a browser.
 After uploading this repository to GitHub, enable GitHub Pages from:
 
 Settings > Pages > Deploy from a branch > main > root
-
